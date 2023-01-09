@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../styles/colors.dart';
 import 'default_text.dart';
 
 class DefaultErrorWidget extends StatelessWidget {
@@ -17,10 +18,10 @@ class DefaultErrorWidget extends StatelessWidget {
             children: [
               Icon(
                 Icons.error_outline,
-                color: Colors.red,
-                size: 50.sp,
+                color: darkSkyBlue,
+                size: 40.sp,
               ),
-               DefaultText(text: 'Something Went Wrong',fontSize: 16.sp,color: Colors.black,)
+               DefaultText(text: 'No Internet Connection',fontSize: 16.sp,color: Colors.black,)
             ],
           ),
         ));

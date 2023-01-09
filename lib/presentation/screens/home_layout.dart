@@ -27,7 +27,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       builder: (context, state) {
         return Scaffold(
           extendBody: false,
-          backgroundColor: blue.withOpacity(0.6),
+
           appBar: AppBar(
             backgroundColor: darkSkyBlue,
             title: DefaultText(

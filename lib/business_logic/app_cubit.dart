@@ -27,6 +27,7 @@ class AppCubit extends Cubit<AppState> {
   List<Exercise> exercises = [];
   List<Muscles> muscles =[];
   Map<Muscles,List<Exercise>> musclesExercise ={};
+  Map<Muscles,List<Exercise>> secondaryMusclesExercise ={};
   Future<List<Exercise>> readJson() async{
     emit(AppLoadingState());
     final String exercisesJson =await rootBundle.loadString('assets/exercises.json');
@@ -36,7 +37,8 @@ class AppCubit extends Cubit<AppState> {
     exercisesResults = exercisesData['results'];
     musclesResults = musclesData['results'];
     exercises =exercisesResults.map((e) => Exercise.fromJson(e)).toList();
-    exercises =exercises.where((element) => element.language?.id ==2).toList();
+    exercises =exercises.where((element) => (element.language?.id ==2 && element.description != '')).toList();
+    exercises.sort((a, b) => b.images.length.compareTo(a.images.length),);
     muscles =musclesResults.map((e) => Muscles.fromJson(e)).toList();
     muscles.sort((a, b) => a.id.compareTo(b.id),);
     return exercises;
@@ -46,7 +48,14 @@ class AppCubit extends Cubit<AppState> {
     emit(AppLoadingState());
     for(Muscles muscle in muscles){
       musclesExercise[muscle] = exercises.where((element) {
-        return element.muscles.isNotEmpty && element.muscles.first.name == muscle.name;
+        return ((element.muscles.isNotEmpty && (element.muscles.first.id == muscle.id))
+            || ( element.muscles.length >= 2 && element.muscles.elementAt(1).id == muscle.id) ||
+            (element.muscles.length >=3 && element.muscles.elementAt(2).id == muscle.id))  ;
+      }).toList();
+      secondaryMusclesExercise[muscle] = exercises.where((element) {
+        return ((element.musclesSecondary.isNotEmpty && element.musclesSecondary.first.id ==muscle.id) ||
+            (element.musclesSecondary.length >= 2 && element.musclesSecondary.elementAt(1).id == muscle.id) ||
+            (element.musclesSecondary.length >= 3 && element.musclesSecondary.elementAt(2).id == muscle.id))  ;
       }).toList();
     }
     emit(AssetsLoadedState());
