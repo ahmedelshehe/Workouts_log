@@ -520,7 +520,7 @@ class MusclesSecondary {
   num get id => _id ?? 0;
   String get name => _name ?? '';
   String get nameEn => _nameEn ?? '';
-  bool? get isFront => _isFront;
+  bool get isFront => _isFront ?? false;
   String get imageUrlMain => _imageUrlMain ?? '';
   String get imageUrlSecondary => _imageUrlSecondary ?? '';
 

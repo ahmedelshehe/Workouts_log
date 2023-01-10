@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:workout_log/business_logic/app_cubit.dart';
 import 'package:workout_log/constants/screens.dart';
-import 'package:workout_log/data/exercise.dart';
 import 'package:workout_log/data/exercise_view_model.dart';
 import 'package:workout_log/presentation/styles/colors.dart';
 import 'package:workout_log/presentation/widgets/default_error_widget.dart';
@@ -88,11 +87,13 @@ class _ExercisesScreenState extends State<ExercisesScreen>
                               replacement: DefaultSVG(
                                   height: 85.sp,
                                   imagePath:
-                                      'assets/images/muscles/muscular_system_back.svg'),
+                                      'assets/images/muscles/muscular_system_back.svg'
+                              ),
                               child: DefaultSVG(
                                   height: 85.sp,
                                   imagePath:
-                                      'assets/images/muscles/muscular_system_front.svg'),
+                                      'assets/images/muscles/muscular_system_front.svg'
+                              ),
                             ),
                             DefaultSVG(
                                 height: 85.sp,
@@ -119,7 +120,7 @@ class _ExercisesScreenState extends State<ExercisesScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 CircularProgressIndicator(
-                  color: Colors.white,
+                  color: darkSkyBlue,
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_log/constants/screens.dart';
 class WorkoutsScreen extends StatefulWidget {
   const WorkoutsScreen({Key? key}) : super(key: key);
 
@@ -9,6 +10,18 @@ class WorkoutsScreen extends StatefulWidget {
 class _WorkoutsScreenState extends State<WorkoutsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Workouts Screen'),);
+    return  Center(child: InkWell(
+      onTap: (){
+        Navigator.of(context)
+            .pushNamed(addWorkoutScreen);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(Icons.add),
+          Text('Add A Workout')
+        ],
+      ),
+    ),);
   }
 }
