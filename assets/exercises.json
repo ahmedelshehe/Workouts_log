@@ -474,9 +474,7 @@
         "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
       },
       "license_author": "burenl",
-      "images": [
-        {"image" :"https://thumbs.gfycat.com/SlushyMetallicAtlanticsharpnosepuffer-size_restricted.gif"}
-      ],
+      "images": [{"image": "https://i.pinimg.com/originals/32/11/36/321136cd77bbaa7922f61d63fe75eb5d.gif"}],
       "videos": [],
       "comments": [],
       "variations": [
@@ -4040,7 +4038,7 @@
           "id": 211,
           "uuid": "34600351-8b0b-4cb0-8daa-583537be15b0",
           "exercise_base": 194,
-          "image": "https://wger.de/media/exercise-images/194/34600351-8b0b-4cb0-8daa-583537be15b0.png",
+          "image": "https://www.inspireusafoundation.org/wp-content/uploads/2021/10/parallel-bar-dips.gif",
           "is_main": true,
           "style": "4",
           "license": 2,
@@ -14434,7 +14432,7 @@
         "url": "https://creativecommons.org/licenses/by-sa/3.0/deed.en"
       },
       "license_author": "minifigmaster125",
-      "images": [{"image": "https://media.tenor.com/wty2ruFKoIkAAAAC/crossfit-pistol-squat.gif"}],
+      "images": [{"image": "https://homeworkouts.org/wp-content/uploads/anim-kettlebell-pistol-squats.gif"}],
       "videos": [],
       "comments": [],
       "variations": [
@@ -15858,70 +15856,8 @@
       ]
     },
     {
-      "id": 208,
-      "name": "Reverse Bar Curl",
-      "aliases": [],
-      "uuid": "438678dc-5a62-4496-9458-341af0616626",
-      "exercise_base_id": 493,
-      "description": "Hold bar with reverse (or \"overhand\") grip, palms facing the floor",
-      "creation_date": "2014-01-15",
-      "category": {
-        "id": 8,
-        "name": "Arms"
-      },
-      "muscles": [
-        {
-          "id": 1,
-          "name": "Biceps brachii",
-          "name_en": "Biceps",
-          "is_front": true,
-          "image_url_main": "assets/images/muscles/main/muscle-1.svg",
-          "image_url_secondary": "assets/images/muscles/secondary/muscle-1.svg"
-        }
-      ],
-      "muscles_secondary": [],
-      "equipment": [
-        {
-          "id": 2,
-          "name": "SZ-Bar"
-        }
-      ],
-      "language": {
-        "id": 2,
-        "short_name": "en",
-        "full_name": "English"
-      },
-      "license": {
-        "id": 1,
-        "full_name": "Creative Commons Attribution Share Alike 3",
-        "short_name": "CC-BY-SA 3",
-        "url": "https://creativecommons.org/licenses/by-sa/3.0/deed.en"
-      },
-      "license_author": "tuckerm",
-      "images": [{"image": "https://thumbs.gfycat.com/SlushyMetallicAtlanticsharpnosepuffer-size_restricted.gif"}],
-      "videos": [],
-      "comments": [],
-      "variations": [
-        81,
-        80,
-        74,
-        129,
-        298,
-        275,
-        138,
-        86,
-        193,
-        208,
-        205,
-        768
-      ],
-      "author_history": [
-        "tuckerm"
-      ]
-    },
-    {
       "id": 771,
-      "name": "Reverse Curl",
+      "name": "Dumbbell Reverse Curl",
       "aliases": [],
       "uuid": "bdcae845-6726-457f-8e04-203754a78e1c",
       "exercise_base_id": 495,
@@ -15981,7 +15917,9 @@
         "url": "http://creativecommons.org/publicdomain/zero/1.0/"
       },
       "license_author": "BFad07",
-      "images": [{"image": "https://i.pinimg.com/originals/32/11/36/321136cd77bbaa7922f61d63fe75eb5d.gif"}],
+      "images": [
+        {"image" :"https://thumbs.gfycat.com/SlushyMetallicAtlanticsharpnosepuffer-size_restricted.gif"}
+      ],
       "videos": [],
       "comments": [
         {

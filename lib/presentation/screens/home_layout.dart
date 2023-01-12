@@ -28,17 +28,18 @@ class _HomeLayoutState extends State<HomeLayout> {
       builder: (context, state) {
         return Scaffold(
           extendBody: false,
-          appBar: AppBar(
+          appBar:cubit.currentIndex ==0 || cubit.currentIndex==1 ? AppBar(
             backgroundColor: darkSkyBlue,
             title: DefaultText(
               text: cubit.screenTitles[cubit.currentIndex],
               color: Colors.white,
             ),
+            actions: [IconButton(onPressed: ()=>cubit.changeIndex(2), icon: Icon(Icons.search))],
             centerTitle: true,
-          ),
+          ) : buildSearchAppBar(),
           body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            currentIndex: cubit.currentIndex,
+            currentIndex: cubit.currentIndex == 2 ? 0 : cubit.currentIndex,
             backgroundColor: Colors.transparent,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.black38,
@@ -73,5 +74,27 @@ class _HomeLayoutState extends State<HomeLayout> {
         );
       },
     );
+  }
+
+  AppBar buildSearchAppBar() {
+    return AppBar(
+          backgroundColor: darkSkyBlue,
+          centerTitle: true,
+          title: TextFormField(
+            autofocus: true,
+            keyboardType: TextInputType.text,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              label: DefaultText(text:'Search',color: Colors.white,),
+            ),
+            onChanged: (value)  {
+                Future.delayed(Duration(milliseconds: 250),() {
+                  cubit.searchTerm=value;
+                  cubit.searchExercises();
+                },);
+          },
+          ),
+          actions: [IconButton(onPressed: ()=>cubit.changeIndex(0), icon: Icon(Icons.close))],
+        );
   }
 }

@@ -4,6 +4,7 @@ import 'package:workout_log/data/exercise_view_model.dart';
 import 'package:workout_log/data/hive/workout.dart';
 import 'package:workout_log/presentation/screens/exercises/exercise_details_screen.dart';
 import 'package:workout_log/presentation/screens/exercises/muscles_exercises_screen.dart';
+import 'package:workout_log/presentation/screens/exercises/search_exercise_screen.dart';
 import 'package:workout_log/presentation/screens/workouts/add_workout.dart';
 import 'package:workout_log/presentation/screens/workouts/workout_details.dart';
 
@@ -28,6 +29,8 @@ class AppRouter{
         return MaterialPageRoute(builder: (_)=> const AddWorkoutScreen());
       case screens.workoutDetailsScreen:
         return MaterialPageRoute(builder: (_)=>WorkoutDetailsScreen(workout: settings.arguments as Workout));
+      case screens.searchExerciseScreen:
+        return MaterialPageRoute(builder: (_)=>SearchExerciseScreen());
     }
     return null;
   }

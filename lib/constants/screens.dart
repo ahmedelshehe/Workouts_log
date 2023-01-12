@@ -5,3 +5,4 @@ const musclesExercisesScreen ='/muscles_exercises_screen';
 const exerciseDetailsScreen ='/exercise_details_screen';
 const addWorkoutScreen ='/add_workout_screen';
 const workoutDetailsScreen = '/workout_details_screen';
+const searchExerciseScreen='/search_exercise_screen';

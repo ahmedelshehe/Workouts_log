@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:workout_log/presentation/screens/exercises/exercises_screen.dart';
+import 'package:workout_log/presentation/screens/exercises/search_exercise_screen.dart';
 import 'package:workout_log/presentation/screens/workouts/workouts_screen.dart';
 
 import '../data/exercise.dart';
@@ -18,10 +19,12 @@ class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
   List<Widget> screens =[
    const ExercisesScreen(),
-    const WorkoutsScreen()
+    const WorkoutsScreen(),
+    const SearchExerciseScreen()
   ];
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
   var currentIndex =0 ;
+  String searchTerm="";
   List<String> screenTitles=[
     'Exercises','Workouts'
   ];
@@ -29,6 +32,7 @@ class AppCubit extends Cubit<AppState> {
   List musclesResults =[];
   List<Exercise> exercises = [];
   List<Muscles> muscles =[];
+  List<Exercise> searchResults =[];
   Map<Muscles,List<Exercise>> musclesExercise ={};
   Map<Muscles,List<Exercise>> secondaryMusclesExercise ={};
   Future<List<Exercise>> readJson() async{
@@ -66,5 +70,20 @@ class AppCubit extends Cubit<AppState> {
   void changeIndex(int index){
     currentIndex=index;
     emit(AppChangeBottomNavBarState());
+  }
+  void searchExercises(){
+    emit(SearchingExerciseState());
+    if(searchTerm.isEmpty){
+      emit(SearchTermCleared());
+    }else{
+      searchResults =exercises.where((element) => element.name.toLowerCase().contains(searchTerm.toLowerCase())).toList();
+      if(searchResults.isEmpty){
+        emit(NoResultsFound());
+      }else{
+        emit(SearchResultsLoaded());
+      }
+
+    }
+
   }
 }
