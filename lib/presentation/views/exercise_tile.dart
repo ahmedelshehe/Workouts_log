@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:workout_log/presentation/views/set_input_column.dart';
 import 'package:workout_log/presentation/widgets/default_material_button.dart';
+import 'package:workout_log/presentation/widgets/default_text_button.dart';
 
 import '../../business_logic/app_cubit.dart';
 import '../../business_logic/workout/workout_cubit.dart';
 import '../../constants/screens.dart';
 import '../../data/exercise.dart';
-import '../../data/exercise_set.dart';
+import '../../data/hive/exercise_set.dart';
+import '../../data/hive/workout_exercise.dart';
 import '../styles/colors.dart';
 import '../widgets/default_text.dart';
 
@@ -35,15 +38,31 @@ class _ExerciseTileState extends State<ExerciseTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5.sp),
-      child: Material(
-        elevation: 20.sp,
-        borderRadius: BorderRadius.circular(20.sp),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 1.h, vertical: 2.w),
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 1.h, top: 1.h),
+    return Dismissible(
+      onDismissed: (direction) {
+      workoutCubit.removeExercise(workoutExercise: widget.exercise);
+      },
+      key: Key(widget.exercise.timeStamp),
+      direction: DismissDirection.startToEnd,
+      background: Container(
+        color: darkSkyBlue,
+        child: Row(
+          children: [
+            Container(
+              color: darkSkyBlue,
+              child: Icon(Icons.delete_outline,size: 10.h,color: Colors.white,),
+            ),
+            DefaultText(text: 'Remove Exercise',fontWeight: FontWeight.w300,textAlign: TextAlign.center,fontSize: 16.sp,color: Colors.white,)
+          ],
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(5.sp),
+        child: Material(
+          elevation: 20.sp,
+          borderRadius: BorderRadius.circular(20.sp),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 3.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -63,7 +82,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                           Navigator.of(context)
                               .pushNamed(exerciseDetailsScreen, arguments: exercise);
                         }, icon: const Icon(Icons.info_outline)),
-                        IconButton(onPressed: (){}, icon: const Icon(Icons.delete)),
+                        IconButton(onPressed: (){workoutCubit.removeExercise(workoutExercise: widget.exercise);}, icon: const Icon(Icons.delete)),
                       ],
                     )
                   ],
@@ -72,7 +91,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                   height: 2.h,
                 ),
                 Visibility(
-                  visible:workoutCubit.workoutExercisesSets[widget.exercise]!.isNotEmpty ,
+                  visible:workoutCubit.workoutExercises.where((element) => element ==widget.exercise).first.sets.isNotEmpty ,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,14 +105,14 @@ class _ExerciseTileState extends State<ExerciseTile> {
                   visible: adding,
                   replacement: DefaultMaterialButton(
                     width: 25.w,
-                    backgroundColor: skyBlue.withOpacity(0.6),
+                    backgroundColor: Colors.white.withOpacity(0.9),
                     onPressed: () {
                       adding =true;
                       setState(() { });
                     },
                     child: const DefaultText(
                       text: 'Add Set',
-                      color: Colors.white,
+                      color: darkSkyBlue,
                     ),
                   ),
                   child: Row(
@@ -183,8 +202,10 @@ class _ExerciseTileState extends State<ExerciseTile> {
   List<Widget> setsWidgets(WorkoutExercise exercise) {
     List<Widget> widgets = [];
     int setNumber = 1;
-    for (ExerciseSet set in workoutCubit.workoutExercisesSets[exercise]!) {
-
+    List<ExerciseSet> thisSets =workoutCubit.workoutExercises.where((element) => element ==exercise).first.sets;
+    for (ExerciseSet set in thisSets) {
+      TextEditingController weightController=TextEditingController(text: set.weight.toString());
+      TextEditingController repsController=TextEditingController(text: set.reps.toString());
       widgets.add(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,14 +256,70 @@ class _ExerciseTileState extends State<ExerciseTile> {
                 ],
               ),
               SizedBox(
-                width: 1.w,
+                width: 5.w,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>  AlertDialog(
+
+                      title: const Text('Edit Set'),
+                      content:SizedBox(
+                        height: 10.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SetInputColumn(controller: weightController, labelText: 'Weight'),
+                            SizedBox(width: 2.w,),
+                            SetInputColumn(controller: repsController, labelText: 'Reps'),
+                            DefaultTextButton(onPressed: (){
+                              if(weightController.text.isEmpty || weightController.text == '0' ||repsController.text.isEmpty || repsController.text == '0' ){
+                                Fluttertoast.showToast(
+                                    msg: "Weight and Reps can't be empty or zero",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.white38,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+                              }else{
+                                set.weight=double.parse(weightController.text);
+                                set.reps=int.parse(repsController.text);
+                                Navigator.pop(context);
+                                setState(() {});
+                              }
+                            }, child: const DefaultText(text: 'Save',)),
+                            DefaultTextButton(onPressed: (){
+                              Navigator.pop(context);
+                            }, child: const DefaultText(text: 'Cancel',))
+                          ],
+                        ),
+                      ),
+                    ),);
+                },
                 child: Container(
                   padding: EdgeInsets.only(top: 15.sp),
                   child: Icon(
                     Icons.edit,
+                    color: darkSkyBlue,
+                    size: 20.sp,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 5.w,
+              ),
+              GestureDetector(
+                onTap: () {
+                  exercise.sets.remove(set);
+                  setState(() {});
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 15.sp),
+                  child: Icon(
+                    Icons.delete,
                     color: darkSkyBlue,
                     size: 20.sp,
                   ),

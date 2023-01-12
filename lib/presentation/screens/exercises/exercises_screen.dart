@@ -30,7 +30,7 @@ class _ExercisesScreenState extends State<ExercisesScreen>
   @override
   void initState() {
     controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 3500))
+        vsync: this, duration: const Duration(milliseconds: 1500))
       ..forward();
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
     cubit = AppCubit.get(context);
@@ -50,11 +50,8 @@ class _ExercisesScreenState extends State<ExercisesScreen>
       if (state is AssetsLoadedState || state is AppChangeBottomNavBarState) {
         return ListView.builder(
           itemBuilder: (context, index) {
-            return Container(
+            return Card(
               margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
-              decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(20.sp)),
               child: InkWell(
                 onTap: () {
                   ExerciseViewModel model = ExerciseViewModel(

@@ -52,9 +52,8 @@ class MusclesExercisesScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => ListTile(
-                title: Text(model.secondaryExercises.elementAt(index).name),
-              ),
+              itemBuilder: (context, index) =>
+                  ExerciseTile(exercise: model.secondaryExercises.elementAt(index)),
               itemCount: model.secondaryExercises.length,
             ),
           ],

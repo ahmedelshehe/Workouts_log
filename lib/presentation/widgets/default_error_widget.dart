@@ -21,7 +21,7 @@ class DefaultErrorWidget extends StatelessWidget {
                 color: darkSkyBlue,
                 size: 40.sp,
               ),
-               DefaultText(text: 'No Internet Connection',fontSize: 16.sp,color: Colors.black,)
+               DefaultText(text: 'Can\'t load image at the moment ',fontSize: 12.sp,color: Colors.black,)
             ],
           ),
         ));

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -85,7 +87,7 @@ List<Widget> slideShowWidgets(
           height: 40.h,
           child: const Center(child: CircularProgressIndicator()),
         ),
-        errorWidget: (context, url, error) =>DefaultErrorWidget(),
+        errorWidget: (context, url, error) =>const DefaultErrorWidget(),
       ),
     ));
   }

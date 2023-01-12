@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../business_logic/app_cubit.dart';
+import '../../constants/screens.dart';
 import '../styles/colors.dart';
 import '../widgets/default_text.dart';
 
@@ -27,12 +28,11 @@ class _HomeLayoutState extends State<HomeLayout> {
       builder: (context, state) {
         return Scaffold(
           extendBody: false,
-
           appBar: AppBar(
             backgroundColor: darkSkyBlue,
             title: DefaultText(
               text: cubit.screenTitles[cubit.currentIndex],
-              color: Colors.black87,
+              color: Colors.white,
             ),
             centerTitle: true,
           ),
@@ -40,7 +40,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
             backgroundColor: Colors.transparent,
-            selectedItemColor: Colors.black,
+            selectedItemColor: Colors.white,
             unselectedItemColor: Colors.black38,
             elevation: 20,
             type: BottomNavigationBarType.shifting,
@@ -48,7 +48,8 @@ class _HomeLayoutState extends State<HomeLayout> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.library_books_rounded),
                   label: 'Exercises',
-                  backgroundColor: darkSkyBlue),
+                  backgroundColor: darkSkyBlue,
+              ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.fitness_center),
                   label: 'Log',
@@ -57,6 +58,17 @@ class _HomeLayoutState extends State<HomeLayout> {
             onTap: (index) {
               cubit.changeIndex(index);
             },
+          ),
+          floatingActionButton:  Visibility(
+            visible: cubit.currentIndex ==1,
+            child: FloatingActionButton(
+              backgroundColor: darkSkyBlue,
+              onPressed: (){
+                Navigator.of(context)
+                    .pushNamed(addWorkoutScreen);
+              },
+              child: const Icon(Icons.add),
+            ),
           ),
         );
       },
