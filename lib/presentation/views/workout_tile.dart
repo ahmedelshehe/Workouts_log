@@ -44,9 +44,10 @@ class WorkoutTile extends StatelessWidget {
                   text: 'Remove Workout',
                   fontSize: 16.sp,
                   color: darkSkyBlue,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
                 ),
+                actionsAlignment: MainAxisAlignment.center,
                 actions: [
                   DefaultTextButton(
                       onPressed: (){
@@ -111,9 +112,10 @@ class WorkoutTile extends StatelessWidget {
                               text: 'Remove Workout',
                               fontSize: 16.sp,
                               color: darkSkyBlue,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w600,
                               textAlign: TextAlign.center,
                             ),
+                            actionsAlignment: MainAxisAlignment.center,
                             actions: [
                               DefaultTextButton(
                                   onPressed: (){

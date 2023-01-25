@@ -6,6 +6,7 @@ import 'package:workout_log/data/hive/exercise_set.dart';
 import 'package:workout_log/data/hive/workout_exercise.dart';
 import 'package:workout_log/presentation/router/app_router.dart';
 import 'business_logic/app_cubit.dart';
+import 'business_logic/modal_sheet/modal_cubit.dart';
 import 'business_logic/workout/workout_cubit.dart';
 import 'constants/bloc_observer.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => WorkoutCubit(),
         ),
+        BlocProvider(create: (context) => ModalCubit(),)
       ],
       child: Sizer(builder: (context, orientation, deviceType) {
         return MaterialApp(

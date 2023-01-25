@@ -73,7 +73,8 @@ class _ExerciseTileState extends State<ExerciseTile> {
                       text: '${widget.index + 1}. ${widget.exercise.exerciseName}',
                       fontWeight: FontWeight.w400,
                       color: darkSkyBlue,
-                      fontSize: 12.sp,
+                      fontSize: 11.sp,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Row(
                       children: [
@@ -86,9 +87,6 @@ class _ExerciseTileState extends State<ExerciseTile> {
                       ],
                     )
                   ],
-                ),
-                SizedBox(
-                  height: 2.h,
                 ),
                 Visibility(
                   visible:workoutCubit.workoutExercises.where((element) => element ==widget.exercise).first.sets.isNotEmpty ,
@@ -165,9 +163,9 @@ class _ExerciseTileState extends State<ExerciseTile> {
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.sp),
                                   child: Icon(
-                                    Icons.add_box_rounded,
-                                    color: darkSkyBlue,
-                                    size: 25.sp,
+                                    Icons.check,
+                                    color: Colors.black54,
+                                    size: 30.sp,
                                   ),
                                 ),
                               ),
@@ -178,8 +176,8 @@ class _ExerciseTileState extends State<ExerciseTile> {
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.sp),
                                   child: Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.red,
+                                    Icons.close,
+                                    color: Colors.black54,
                                     size: 25.sp,
                                   ),
                                 ),
@@ -274,7 +272,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                             SizedBox(width: 2.w,),
                             SetInputColumn(controller: repsController, labelText: 'Reps'),
                             DefaultTextButton(onPressed: (){
-                              if(weightController.text.isEmpty || weightController.text == '0' ||repsController.text.isEmpty || repsController.text == '0' ){
+                              if(weightController.text.isEmpty || weightController.text == 0 ||repsController.text.isEmpty || repsController.text == 0 ){
                                 Fluttertoast.showToast(
                                     msg: "Weight and Reps can't be empty or zero",
                                     toastLength: Toast.LENGTH_SHORT,

@@ -7,9 +7,12 @@ import 'package:workout_log/business_logic/app_cubit.dart';
 import 'package:workout_log/data/hive/workout.dart';
 import 'package:workout_log/presentation/styles/colors.dart';
 import 'package:workout_log/presentation/widgets/default_material_button.dart';
+import '../../../business_logic/modal_sheet/modal_cubit.dart';
 import '../../../business_logic/workout/workout_cubit.dart';
+import '../../../constants/screens.dart';
 import '../../../data/exercise.dart';
 import '../../../data/hive/workout_exercise.dart';
+import '../../views/add_exercise_modal_sheet.dart';
 import '../../views/exercise_tile.dart';
 import '../../widgets/default_text.dart';
 
@@ -23,7 +26,7 @@ class AddWorkoutScreen extends StatefulWidget {
 class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   late AppCubit cubit;
   late WorkoutCubit workoutCubit;
-  late List<Exercise> exercises;
+  late List<Muscles> muscles;
   late List<WorkoutExercise> workoutExercises;
   late int id;
   late int listLength;
@@ -31,24 +34,19 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   @override
   void initState() {
     cubit = AppCubit.get(context);
-    exercises = cubit.exercises;
+    muscles = cubit.muscles;
     id = DateTime.now().millisecondsSinceEpoch;
     workoutCubit = WorkoutCubit.get(context);
     workoutExercises = workoutCubit.workoutExercises;
-    exercises.sort(
-      (a, b) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      },
-    );
-    listLength =workoutCubit.workoutExercises.length;
-    isSaving =false;
+    listLength = workoutCubit.workoutExercises.length;
+    isSaving = false;
     super.initState();
   }
+
   @override
   void dispose() {
-    if(listLength != workoutCubit.workoutExercises.length && !isSaving){
-      String workoutName =
-      DateFormat.yMMMEd().format(DateTime.now());
+    if (listLength != workoutCubit.workoutExercises.length && !isSaving) {
+      String workoutName = DateFormat.yMMMEd().format(DateTime.now());
       Workout workout = Workout(
           id: id,
           timeStamp: id.toString(),
@@ -63,16 +61,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
       super.dispose();
-    }else{
+    } else {
       workoutCubit.clear();
       super.dispose();
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +106,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.add,color: darkSkyBlue,size: 50.sp,),
+                      Icon(
+                        Icons.add,
+                        color: darkSkyBlue,
+                        size: 50.sp,
+                      ),
                       DefaultText(
                         text: 'Add Exercise',
                         fontSize: 20.sp,
@@ -151,7 +150,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                               exercises: workoutCubit.workoutExercises);
                           workoutCubit.addWorkout(workout);
                           workoutCubit.clear();
-                          isSaving=true;
+                          isSaving = true;
                           Navigator.pop(context);
                         },
                         child: const DefaultText(
@@ -178,56 +177,32 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   }
 
   Future<dynamic> buildShowModalBottomSheet(BuildContext context) {
+    ModalCubit modalCubit = ModalCubit.get(context);
+
+    List<DropdownMenuItem<Object>> getMuscles() {
+      List<DropdownMenuItem<Object>> widgets = [];
+      for (Muscles muscle in muscles) {
+        widgets.add(DropdownMenuItem(
+            onTap: () {
+              modalCubit.selectMuscle(muscle, cubit.musclesExercise[muscle]!);
+            },
+            value: muscle.id,
+            child: DefaultText(
+              text: muscle.nameEn,
+              fontSize: 16.sp,
+            )));
+      }
+      return widgets;
+    }
+
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        List<DropdownMenuItem<Object>> getExercises(List<Exercise> exercises) {
-          late WorkoutExercise workoutExercise;
-          List<DropdownMenuItem<Object>> widgets = [];
-          for (Exercise exercise in exercises) {
-            widgets.add(DropdownMenuItem(
-              onTap: () {
-                workoutExercise = WorkoutExercise(
-                    id: id,
-                    exerciseName: exercise.name,
-                    exerciseId: exercise.id as int,
-                    timeStamp: DateTime.now().millisecondsSinceEpoch.toString(),
-                    sets: []);
-                workoutCubit.addExercise(workoutExercise: workoutExercise);
-                Navigator.pop(context);
-                setState(() {});
-              },
-              value: exercise.id,
-              child: Text(exercise.name),
-            ));
-          }
-          return widgets;
-        }
-
-        return SizedBox(
-          height: 15.h,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                child: DropdownButtonFormField(
-                  menuMaxHeight: 40.h,
-                  dropdownColor: Colors.white,
-                  hint: const DefaultText(
-                    text: 'Select Exercise',
-                    color: darkSkyBlue,
-                  ),
-                  style: const TextStyle(color: Colors.black),
-                  items: getExercises(exercises),
-                  onChanged: (Object? value) {},
-                ),
-              ),
-            ],
-          ),
+        return AddExerciseModalSheet(
+          muscles: getMuscles(),
         );
       },
     );
   }
 }
+

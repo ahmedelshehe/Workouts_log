@@ -5,10 +5,12 @@ import 'package:sizer/sizer.dart';
 import 'package:workout_log/business_logic/workout/workout_cubit.dart';
 
 import '../../../business_logic/app_cubit.dart';
+import '../../../business_logic/modal_sheet/modal_cubit.dart';
 import '../../../data/exercise.dart';
 import '../../../data/hive/workout.dart';
 import '../../../data/hive/workout_exercise.dart';
 import '../../styles/colors.dart';
+import '../../views/add_exercise_modal_sheet.dart';
 import '../../views/exercise_tile.dart';
 import '../../widgets/default_material_button.dart';
 import '../../widgets/default_text.dart';
@@ -24,15 +26,17 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
   late AppCubit cubit;
   late WorkoutCubit workoutCubit;
   late List<Exercise> exercises;
+  late List<Muscles> muscles;
   late int id;
   late int listLength;
   late bool isSaving;
+
   @override
   void initState() {
-
     id = DateTime.now().millisecondsSinceEpoch;
     cubit = AppCubit.get(context);
     exercises = cubit.exercises;
+    muscles =cubit.muscles;
     workoutCubit = WorkoutCubit.get(context);
     if(widget.workout.exercises.isNotEmpty){
       workoutCubit.addExerciseIntoCubit(widget.workout.exercises);
@@ -84,30 +88,7 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
               replacement: Center(
                 child: InkWell(
                   onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: 15.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Container(
-                                padding:  EdgeInsets.symmetric(horizontal: 5.w),
-                                child: DropdownButtonFormField(
-                                  menuMaxHeight: 40.h,
-                                  dropdownColor: Colors.white,
-                                  hint: const DefaultText(text: 'Select Exercise',color: darkSkyBlue,),
-                                  style: const TextStyle(color: Colors.black),
-                                  items: getExercises(exercises), onChanged: (Object? value) {  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
+                    buildShowModalBottomSheet(context);
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -162,30 +143,7 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: 15.h,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      padding:  EdgeInsets.symmetric(horizontal: 5.w),
-                      child: DropdownButtonFormField(
-                        menuMaxHeight: 40.h,
-                        dropdownColor: Colors.white,
-                        hint: const DefaultText(text: 'Select Exercise',color: darkSkyBlue,),
-                        style: const TextStyle(color: Colors.black),
-                        items: getExercises(exercises), onChanged: (Object? value) {  },
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
+          buildShowModalBottomSheet(context);
         },
         backgroundColor: darkSkyBlue,
         child: const Icon(Icons.add),
@@ -211,9 +169,37 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
           setState(() {});
         },
         value: exercise.id,
-        child: Text(exercise.name),
+        child: DefaultText(text:exercise.name,fontSize: 11.sp,),
       ));
     }
     return widgets;
+  }
+  Future<dynamic> buildShowModalBottomSheet(BuildContext context) {
+    ModalCubit modalCubit = ModalCubit.get(context);
+
+    List<DropdownMenuItem<Object>> getMuscles() {
+      List<DropdownMenuItem<Object>> widgets = [];
+      for (Muscles muscle in muscles) {
+        widgets.add(DropdownMenuItem(
+            onTap: () {
+              modalCubit.selectMuscle(muscle, cubit.musclesExercise[muscle]!);
+            },
+            value: muscle.id,
+            child: DefaultText(
+              text: muscle.nameEn,
+              fontSize: 16.sp,
+            )));
+      }
+      return widgets;
+    }
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return AddExerciseModalSheet(
+          muscles: getMuscles(),
+        );
+      },
+    );
   }
 }

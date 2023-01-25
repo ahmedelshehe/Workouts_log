@@ -16,13 +16,13 @@ class SetInputColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DefaultText(text:labelText,fontWeight: FontWeight.w300,color: darkSkyBlue,),
+        DefaultText(text:labelText,fontWeight: FontWeight.w500,color: Colors.black45,),
         SizedBox(height: 3.sp,),
         Container(
           width: 15.w,
           decoration: BoxDecoration(
-              border: Border.all(color: darkSkyBlue),
-              borderRadius: BorderRadius.circular(20.sp)
+              borderRadius: BorderRadius.circular(20.sp),
+            color: Colors.black12,
           ),
           child: TextFormField(
             autofocus: false,
@@ -39,7 +39,7 @@ class SetInputColumn extends StatelessWidget {
             validator: (value){
               if(value!.isEmpty){
                 Fluttertoast.showToast(
-                    msg: "$labelText Can't be Empty",
+                    msg: "$labelText is  Empty",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
@@ -48,7 +48,20 @@ class SetInputColumn extends StatelessWidget {
                     fontSize: 16.sp
                 );
                 return '';
-              }else {
+              }else if(value == '0'){
+                Fluttertoast.showToast(
+                    msg: "$labelText is zero",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.blue,
+                    fontSize: 16.sp
+
+                );
+                return '';
+              }
+              else {
                 return null;
               }
             },
