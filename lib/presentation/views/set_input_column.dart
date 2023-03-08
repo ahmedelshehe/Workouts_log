@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
-import '../styles/colors.dart';
 import '../widgets/default_text.dart';
 class SetInputColumn extends StatelessWidget {
   const SetInputColumn({

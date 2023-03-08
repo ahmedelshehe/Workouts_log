@@ -83,6 +83,7 @@ class WorkoutTile extends StatelessWidget {
               .pushNamed(workoutDetailsScreen,arguments: workout);
         },
         child: Card(
+          color: Colors.white,
           elevation: 10,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

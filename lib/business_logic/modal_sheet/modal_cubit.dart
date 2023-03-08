@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:workout_log/business_logic/app_cubit.dart';
 import 'package:workout_log/data/exercise.dart';
 
 part 'modal_state.dart';

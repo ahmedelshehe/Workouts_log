@@ -29,10 +29,8 @@ class _HomeLayoutState extends State<HomeLayout> {
         return Scaffold(
           extendBody: false,
           appBar:cubit.currentIndex ==0 || cubit.currentIndex==1 ? AppBar(
-            backgroundColor: darkSkyBlue,
             title: DefaultText(
               text: cubit.screenTitles[cubit.currentIndex],
-              color: Colors.white,
             ),
             actions: [IconButton(onPressed: ()=>cubit.changeIndex(2), icon: Icon(Icons.search))],
             centerTitle: true,
@@ -41,7 +39,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex == 2 ? 0 : cubit.currentIndex,
             backgroundColor: Colors.transparent,
-            selectedItemColor: Colors.white,
+            selectedItemColor: darkSkyBlue,
             unselectedItemColor: Colors.black38,
             elevation: 20,
             type: BottomNavigationBarType.shifting,
@@ -49,12 +47,12 @@ class _HomeLayoutState extends State<HomeLayout> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.library_books_rounded),
                   label: 'Exercises',
-                  backgroundColor: darkSkyBlue,
+
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.fitness_center),
                   label: 'Log',
-                  backgroundColor: darkSkyBlue),
+                  ),
             ],
             onTap: (index) {
               cubit.changeIndex(index);
@@ -63,7 +61,6 @@ class _HomeLayoutState extends State<HomeLayout> {
           floatingActionButton:  Visibility(
             visible: cubit.currentIndex ==1,
             child: FloatingActionButton(
-              backgroundColor: darkSkyBlue,
               onPressed: (){
                 Navigator.of(context)
                     .pushNamed(addWorkoutScreen);
@@ -78,14 +75,13 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   AppBar buildSearchAppBar() {
     return AppBar(
-          backgroundColor: darkSkyBlue,
           centerTitle: true,
           title: TextFormField(
             autofocus: true,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: darkSkyBlue),
             decoration: InputDecoration(
-              label: DefaultText(text:'Search',color: Colors.white,),
+              label: DefaultText(text:'Search',color: darkSkyBlue,),
             ),
             onChanged: (value)  {
                 Future.delayed(Duration(milliseconds: 250),() {

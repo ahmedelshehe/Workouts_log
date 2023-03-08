@@ -19,7 +19,6 @@ class MusclesExercisesScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(model.muscle.nameEn),
-        backgroundColor: darkSkyBlue,
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -74,9 +74,8 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text(widget.workout.name),
+        title: DefaultText(text:widget.workout.name,color: darkSkyBlue,),
         centerTitle: true,
-        backgroundColor: darkSkyBlue,
       ),
       body: BlocBuilder<WorkoutCubit, WorkoutState>(
         builder: (context, state) {
@@ -118,7 +117,7 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
                     Padding(
                       padding:  EdgeInsets.only(bottom: 5.h,top: 5.h),
                       child: DefaultMaterialButton(
-                        backgroundColor: darkSkyBlue,
+                        backgroundColor: darkSkyBlue.withOpacity(0.8),
                         width: 50.w,
                         onPressed: (){
                           Workout workout =Workout(id: widget.workout.id, timeStamp: widget.workout.timeStamp, name:widget.workout.name, exercises: workoutCubit.workoutExercises);
@@ -145,7 +144,6 @@ class _WorkoutDetailsScreenState extends State<WorkoutDetailsScreen> {
         onPressed: () {
           buildShowModalBottomSheet(context);
         },
-        backgroundColor: darkSkyBlue,
         child: const Icon(Icons.add),
       ),
     );

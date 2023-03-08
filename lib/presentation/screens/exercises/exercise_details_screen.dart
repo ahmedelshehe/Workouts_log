@@ -46,14 +46,14 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: darkSkyBlue,
-        title: Text(widget.exercise.name),
+        title: DefaultText(text:widget.exercise.name,color: darkSkyBlue,),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ImagesStack(images: widget.exercise.images),
              ExpansionTile(
+
               title: Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 2.w),
                 child: DefaultText(

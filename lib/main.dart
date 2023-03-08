@@ -54,11 +54,14 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Workouts Log',
           theme: ThemeData(
-            primarySwatch: Colors.blueGrey,
+            useMaterial3: true,
+            colorSchemeSeed: Colors.black87,
+              dividerColor: Colors.transparent
           ),
           onGenerateRoute: appRouter.onGenerateRoute,
         );
-      }),
+      },
+      ),
     );
   }
 }

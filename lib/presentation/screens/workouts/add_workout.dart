@@ -9,7 +9,6 @@ import 'package:workout_log/presentation/styles/colors.dart';
 import 'package:workout_log/presentation/widgets/default_material_button.dart';
 import '../../../business_logic/modal_sheet/modal_cubit.dart';
 import '../../../business_logic/workout/workout_cubit.dart';
-import '../../../constants/screens.dart';
 import '../../../data/exercise.dart';
 import '../../../data/hive/workout_exercise.dart';
 import '../../views/add_exercise_modal_sheet.dart';
@@ -75,8 +74,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: darkSkyBlue,
-        title: const Text('Add Workout'),
+        title: DefaultText(text:'Add Workout',color: darkSkyBlue,),
       ),
       body: BlocBuilder<WorkoutCubit, WorkoutState>(
         builder: (context, state) {
@@ -170,7 +168,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         onPressed: () {
           buildShowModalBottomSheet(context);
         },
-        backgroundColor: darkSkyBlue,
         child: const Icon(Icons.add),
       ),
     );
